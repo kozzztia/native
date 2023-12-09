@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, Button, StyleSheet, Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {
   StackNavigationProp,
   createStackNavigator,
+  HeaderBackButton,
 } from '@react-navigation/stack';
 
 type RootStackParamList = {
@@ -51,12 +52,36 @@ const PostsScreen: React.FC<{route: {params: {post: number}}}> = ({route}) => {
   );
 };
 
+const CustomBackImage = () => (
+  <Image
+    style={{width: 30, height: 30}}
+    source={{
+      uri: 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.png',
+    }}
+  />
+);
+
 const Stack = createStackNavigator();
 
 const App = () => (
   <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#f4511e',
+          opacity: 0.7,
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitle: '',
+      }}>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{headerTitle: CustomBackImage}}
+      />
       <Stack.Screen name="Details" component={DetailsScreen} />
       <Stack.Screen name="Posts" component={PostsScreen} />
     </Stack.Navigator>
